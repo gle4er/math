@@ -10,7 +10,10 @@ void printm() //вывод матрицы на экран
 {
     for (int i = 0; i < cnt; i++) {
         for (int j = 0; j < cnt + 1; j++)
-            printf("%.1lf ", matrix[i][j]);
+            if (j == cnt - 1)
+                printf("%.1lf | ", matrix[i][j]);
+            else
+                printf("%.1lf ", matrix[i][j]);
         printf("\n");
     }
     printf("\n");
@@ -36,14 +39,6 @@ void max_move(int i) //модификация
             }
         }
     str_move(max[1], i);
-}
-
-void calc(int mda)
-{
-    double tmp = 0;
-    for (int i = cnt - 1; i > mda; i--) 
-        tmp += matrix[mda][i] * answer[i];
-    answer[mda] = (matrix[mda][cnt] - tmp) / matrix[mda][mda];
 }
 
 void load() //загрузка матрицы с файла
@@ -81,9 +76,12 @@ void gauss_forward()
 
 void gauss_backward()
 {
-    answer[cnt - 1] = matrix[cnt - 1][cnt] / matrix[cnt - 1][cnt - 1];
-    for (int i = cnt - 2; i >= 0; i--) 
-        calc(i);
+    for (int i = cnt - 1; i >= 0; i--) {
+        double tmp = 0;
+        for (int j = cnt - 1; j > i; j--) 
+            tmp += matrix[i][j] * answer[j];
+        answer[i] = (matrix[i][cnt] - tmp) / matrix[i][i];
+    }
 }
 
 int main()
