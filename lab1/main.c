@@ -6,6 +6,24 @@ int cnt = 0; //длина матрицы
 double **matrix = 0;
 double *answer = 0;
 
+void check()
+{
+    int flg = 0;
+    for (int i = 0; i < cnt; i++) {
+        for (int j = i + 1; j < cnt; j++) {
+            double koeff = matrix[i][0] / matrix[j][0];
+            for (int k = 0; k < cnt + 1; k++) 
+                if (matrix[i][k] / matrix[j][k] == koeff)
+                    flg++;
+            if (flg == cnt + 1) {
+                fprintf(stderr, "this matrix is virojdennaya\n");
+                exit(EXIT_FAILURE);
+            } else
+                flg = 0;
+        }
+    }
+}
+
 void printm() //вывод матрицы на экран
 {
     for (int i = 0; i < cnt; i++) {
@@ -88,6 +106,7 @@ int main()
 {
     load();
     printm();
+    check();
     gauss_forward();
     gauss_backward();
     for (int i = 0; i < cnt; i++)
