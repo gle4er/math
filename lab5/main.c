@@ -4,11 +4,13 @@
 
 #define LVL 2
 
-double langrage(double *x_val, double *y_val, double x, int cnt)
+float x = 2.28; //<--ЗНАЧЕНИЕ ХЭ ПИСАТЬ СЮДА)00)))00))
+
+double langrage(float *x_val, float *y_val, int cnt)
 {
-    double res = 0;
+    float res = 0;
     for (int i = 0; i < cnt + 1; i++) {
-        double tmp = 1;
+        float tmp = 1;
         for (int j = 0; j < cnt + 1; j++) {
             if (i == j)
                 continue;
@@ -19,7 +21,7 @@ double langrage(double *x_val, double *y_val, double x, int cnt)
     return res;
 }
 
-void load(double **x_val, double **y_val, double *intrvl, int *cnt)
+void load(float **x_val, float **y_val, float *intrvl, int *cnt)
 {
     FILE *f = fopen("file", "r");
     char tmp = 0;
@@ -29,32 +31,27 @@ void load(double **x_val, double **y_val, double *intrvl, int *cnt)
             *cnt += 1;
     }
     *cnt += 1;
-    double *tmp1 = (double*) malloc(sizeof(double) * *cnt);
-    double *tmp2 = (double*) malloc(sizeof(double) * *cnt);
+    float *tmp1 = (float*) malloc(sizeof(float) * *cnt);
+    float *tmp2 = (float*) malloc(sizeof(float) * *cnt);
     f = fopen("file", "r");
     for (int i = 0; i < *cnt; i++)
-        fscanf(f, "%lf", &tmp1[i]);
+        fscanf(f, "%f", &tmp1[i]);
     *x_val = tmp1;
     for (int i = 0; i < *cnt; i++)
-        fscanf(f, "%lf", &tmp2[i]);
+        fscanf(f, "%f", &tmp2[i]);
     *y_val = tmp2;
-    fscanf(f, "%lf", intrvl);
+    fscanf(f, "%f", intrvl);
     fclose(f);
     return;
 }
 
-int main(int argc, char **argv)
+int main()
 {
-    if (argc != 2) {
-        fprintf(stderr, "usg: %s x\n", argv[0]);
-        exit(EXIT_FAILURE);
-    }
     int cnt = 0;
-    double *x_val = NULL, *y_val = NULL, intrvl = 0;
+    float *x_val = NULL, *y_val = NULL, intrvl = 0;
     load(&x_val, &y_val, &intrvl, &cnt);
-    int x = atoi(argv[1]);
-    double answ = langrage(x_val, y_val, x, LVL);
-    printf("%.2lf ", answ);
+    float answ = langrage(x_val, y_val, LVL);
+    printf("%.2f ", answ);
     printf("\n");
     return 0;
 }
