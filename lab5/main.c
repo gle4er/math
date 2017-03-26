@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#define LVL 2
+
 double langrage(double *x_val, double *y_val, double x, int cnt)
 {
     double res = 0;
@@ -50,7 +52,7 @@ int main()
     answ = (double*) malloc(sizeof(double) * cnt_points);
     int k = 0;
     for (double i = x_val[0]; k < cnt_points; i += intrvl, k++) 
-        answ[k] = langrage(x_val, y_val, i, 2);
+        answ[k] = langrage(x_val, y_val, i, LVL);
     for (int i = 0; i < cnt_points; i++)
         printf("%.2lf ", answ[i]);
     printf("\n");
