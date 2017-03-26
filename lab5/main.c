@@ -43,15 +43,21 @@ void load(double **x_val, double **y_val, double *intrvl, int *cnt)
     return;
 }
 
-int main()
+int main(int argc, char **argv)
 {
+    if (argc != 3) {
+        fprintf(stderr, "usg: %s x_begin x_end\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
     int cnt = 0;
     double *x_val = NULL, *y_val = NULL, *answ = NULL, intrvl = 0;
     load(&x_val, &y_val, &intrvl, &cnt);
-    int cnt_points = floor(fabs(x_val[cnt - 1] - x_val[0]) / intrvl);
+    int beg = atoi(argv[1]);
+    int end = atoi(argv[2]);
+    int cnt_points = floor(abs(end - beg) / intrvl) + 1;
     answ = (double*) malloc(sizeof(double) * cnt_points);
     int k = 0;
-    for (double i = x_val[0]; k < cnt_points; i += intrvl, k++) 
+    for (double i = beg; k < cnt_points; i += intrvl, k++) 
         answ[k] = langrage(x_val, y_val, i, LVL);
     for (int i = 0; i < cnt_points; i++)
         printf("%.2lf ", answ[i]);
