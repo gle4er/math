@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define LVL 2
-
 float x = 2.28; //<--ЗНАЧЕНИЕ ХЭ ПИСАТЬ СЮДА)00)))00))
 float beg = 0; //начало интервала
 float end = 4; //конец
