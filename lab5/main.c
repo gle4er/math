@@ -45,22 +45,16 @@ void load(double **x_val, double **y_val, double *intrvl, int *cnt)
 
 int main(int argc, char **argv)
 {
-    if (argc != 3) {
-        fprintf(stderr, "usg: %s x_begin x_end\n", argv[0]);
+    if (argc != 2) {
+        fprintf(stderr, "usg: %s x\n", argv[0]);
         exit(EXIT_FAILURE);
     }
     int cnt = 0;
-    double *x_val = NULL, *y_val = NULL, *answ = NULL, intrvl = 0;
+    double *x_val = NULL, *y_val = NULL, intrvl = 0;
     load(&x_val, &y_val, &intrvl, &cnt);
-    int beg = atoi(argv[1]);
-    int end = atoi(argv[2]);
-    int cnt_points = floor(abs(end - beg) / intrvl) + 1;
-    answ = (double*) malloc(sizeof(double) * cnt_points);
-    int k = 0;
-    for (double i = beg; k < cnt_points; i += intrvl, k++) 
-        answ[k] = langrage(x_val, y_val, i, LVL);
-    for (int i = 0; i < cnt_points; i++)
-        printf("%.2lf ", answ[i]);
+    int x = atoi(argv[1]);
+    double answ = langrage(x_val, y_val, x, LVL);
+    printf("%.2lf ", answ);
     printf("\n");
     return 0;
 }
