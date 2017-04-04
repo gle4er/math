@@ -2,15 +2,15 @@
 #include <stdlib.h>
 #include <math.h>
 
-double x = 2.28; //<--ЗНАЧЕНИЕ ХЭ ПИСАТЬ СЮДА)00)))00))
-double beg = 0; //начало интервала
+double x = 2.56; //<--ЗНАЧЕНИЕ ХЭ ПИСАТЬ СЮДА)00)))00))
+double beg = 1; //начало интервала
 double end = 4; //конец
 double intrvl = 1; //длина интервала
-int cnt = 3; //кол-во переменных для лагранжа
+int cnt = 4; //кол-во переменных для лагранжа
 
 double f(double x)
 {
-    return x * x + 2;
+    return sqrt(x);
 }
 
 void output(double tmp, int i, double *x_val, double *y_val)
