@@ -2,18 +2,27 @@
 #include <stdlib.h>
 #include <math.h>
 
-double x = 2.56; //<--ЗНАЧЕНИЕ ХЭ ПИСАТЬ СЮДА)00)))00))
 double beg = 1; //начало интервала
 double end = 4; //конец
-double intrvl = 1; //длина интервала
-int cnt = 4; //кол-во переменных для лагранжа
+double intrvl = 0.5; //длина интервала
+int cnt = 3; //кол-во переменных для лагранжа
+
+void tabl(double *x_val, double *y_val, int point_cnt)
+{
+    printf("x\t");
+    for (int i = 0; i < point_cnt; i++)
+        printf("%.2lf\t", x_val[i]);
+    printf("h = %.2lf\ny\t", intrvl);
+    for (int i = 0; i < point_cnt; i++)
+        printf("%.2lf\t", y_val[i]);
+}
 
 double f(double x)
 {
-    return sqrt(x);
+    return x * x;
 }
 
-void output(double tmp, int i, double *x_val, double *y_val)
+void output(double tmp, int i, double *x_val, double *y_val, double x) //красивый вывод расчёта многочленов ланграге
 {
     for (int k = 0; k < cnt; k++) {
         if (k == i)
@@ -34,7 +43,7 @@ void output(double tmp, int i, double *x_val, double *y_val)
     return;
 }
 
-double langrage(double *x_val, double *y_val)
+double langrage(double *x_val, double *y_val, double x)
 {
     double res = 0;
     for (int i = 0; i < cnt; i++) {
@@ -45,7 +54,7 @@ double langrage(double *x_val, double *y_val)
             tmp *= (x - x_val[j]) / (x_val[i] - x_val[j]);
         }
         res += tmp * y_val[i];
-        output(tmp, i, x_val, y_val);
+        printf("L%d(x) = %.2lf\t", i + 1, res);
     }
     return res;
 }
@@ -62,8 +71,13 @@ int main()
         k += intrvl;
         y_val[i] = f(x_val[i]);
     }
-    double answ = langrage(x_val, y_val);
-    printf("%.3lf ", answ);
+    tabl(x_val, y_val, point_cnt);
     printf("\n");
+    for (int i = 0; i < point_cnt; i++) {
+        double x = beg + intrvl / 2 * i;
+        printf("x = %.2lf\t", x);
+        langrage(x_val, y_val, x);
+        printf("f(x) = %.2lf\n", f(x));
+    }
     return 0;
 }
