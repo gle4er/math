@@ -43,9 +43,31 @@ void output(double tmp, int i, double *x_val, double *y_val, double x) //кра�
     return;
 }
 
-double langrage(double *x_val, double *y_val, double x)
+double langrage(double *xs, double *ys, double x, int point_cnt)
 {
     double res = 0;
+    double x_val[cnt],
+            y_val[cnt];
+    int mda;
+    for (mda = 0; mda < point_cnt; mda++) 
+        if (xs[mda] >= x)
+            break;
+    if (mda == 0) {
+        for (int i = 0; i < cnt; i++) {
+            x_val[i] = xs[i + 1];
+            y_val[i] = f(x_val[i]);
+        }
+    } else if (mda == point_cnt) {
+        for (int i = 0; i < cnt; i++) {
+            x_val[i] = xs[mda - 1 - i];
+            y_val[i] = f(x_val[i]);
+        }
+    } else {
+        for (int i = 0; i < cnt; i++) {
+            x_val[i] = xs[mda + i * (int)pow(-1, i)];
+            y_val[i] = f(x_val[i]);
+        }
+    }
     for (int i = 0; i < cnt; i++) {
         double tmp = 1;
         for (int j = 0; j < cnt; j++) {
@@ -76,7 +98,7 @@ int main()
     for (int i = 0; i < point_cnt; i++) {
         double x = beg + intrvl / 2 * i;
         printf("x = %.2lf\t", x);
-        langrage(x_val, y_val, x);
+        langrage(x_val, y_val, x, point_cnt);
         printf("f(x) = %.2lf\n", f(x));
     }
     return 0;
