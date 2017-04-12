@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <math.h>
 
-double beg = 1; //начало интервала
-double end = 4; //конец
+double beg = -2; //начало интервала
+double end = 2; //конец
 double intrvl = 0.5; //длина интервала
-int cnt = 3; //кол-во переменных для лагранжа
+int cnt = 4; //кол-во переменных для лагранжа
 
 void tabl(double *x_val, double *y_val, int point_cnt)
 {
@@ -19,7 +19,7 @@ void tabl(double *x_val, double *y_val, int point_cnt)
 
 double f(double x)
 {
-    return x * x;
+    return sin(x);
 }
 
 void output(double tmp, int i, double *x_val, double *y_val, double x) //красивый вывод расчёта многочленов ланграге
@@ -43,18 +43,19 @@ void output(double tmp, int i, double *x_val, double *y_val, double x) //кра�
     return;
 }
 
-double langrage(double *xs, double *ys, double x, int point_cnt)
+double langrage(double *xs, double x, int point_cnt)
 {
     double res = 0;
     double x_val[cnt],
             y_val[cnt];
+
     int mda;
     for (mda = 0; mda < point_cnt; mda++) 
         if (xs[mda] >= x)
             break;
     if (mda == 0) {
         for (int i = 0; i < cnt; i++) {
-            x_val[i] = xs[i + 1];
+            x_val[i] = xs[i];
             y_val[i] = f(x_val[i]);
         }
     } else if (mda == point_cnt) {
@@ -68,7 +69,8 @@ double langrage(double *xs, double *ys, double x, int point_cnt)
             y_val[i] = f(x_val[i]);
         }
     }
-    for (int i = 0; i < cnt; i++) {
+
+    for (int i = 0; i < cnt - 1; i++) {
         double tmp = 1;
         for (int j = 0; j < cnt; j++) {
             if (i == j)
@@ -76,7 +78,9 @@ double langrage(double *xs, double *ys, double x, int point_cnt)
             tmp *= (x - x_val[j]) / (x_val[i] - x_val[j]);
         }
         res += tmp * y_val[i];
-        printf("L%d(x) = %.2lf\t", i + 1, res);
+        printf("L%d(x) = %.6lf\t", i + 1, res);
+        printf("\n");
+        output(tmp, i, x_val, y_val, x);
     }
     return res;
 }
@@ -98,7 +102,7 @@ int main()
     for (int i = 0; i < point_cnt; i++) {
         double x = beg + intrvl / 2 * i;
         printf("x = %.2lf\t", x);
-        langrage(x_val, y_val, x, point_cnt);
+        langrage(x_val, x, point_cnt);
         printf("f(x) = %.2lf\n", f(x));
     }
     return 0;
