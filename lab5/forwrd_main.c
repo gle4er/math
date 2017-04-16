@@ -35,42 +35,18 @@ void output(double tmp, int i, double *x_val, double *y_val)
     return;
 }
 
-double langrage(double *ys, double *xs, int point_cnt)
+double langrage(double *x_val, double *y_val)
 {
     double res = 0;
-	double x_val[cnt],
-            y_val[cnt];
-
-    int mda;
-    for (mda = 0; mda < point_cnt; mda++) 
-        if (ys[mda] >= y)
-            break;
-    if (mda == 0) {
-        for (int i = 0; i < cnt; i++) {
-            y_val[i] = ys[i];
-            x_val[i] = xs[i];
-        }
-    } else if (mda == point_cnt) {
-        for (int i = 0; i < cnt; i++) {
-            x_val[i] = xs[mda - 1 - i];
-            y_val[i] = ys[i];
-        }
-    } else {
-        for (int i = 0; i < cnt; i++) {
-            int j = mda + i * (int)pow(-1, i);
-            x_val[i] = xs[j];
-            y_val[i] = ys[j];
-        }
-    }
     for (int i = 0; i < cnt; i++) {
         double tmp = 1;
         for (int j = 0; j < cnt; j++) {
             if (i == j)
                 continue;
-            tmp *= (y - y_val[j]) / (y_val[i] - y_val[j]);
+            tmp *= (x - x_val[j]) / (x_val[i] - x_val[j]);
         }
-        res += tmp * x_val[i];
-        output(tmp, i, y_val, x_val);
+        res += tmp * y_val[i];
+        output(tmp, i, x_val, y_val);
     }
     return res;
 }
@@ -87,7 +63,8 @@ int main()
         k += intrvl;
         y_val[i] = f(x_val[i]);
     }
-    double answ = langrage(y_val, x_val, point_cnt); //обратный ланграге
+    /*double answ = langrage(x_val, y_val); //прямой ланграге*/
+    double answ = langrage(y_val, x_val); //обратный ланграге
     printf("%.3lf ", answ);
     printf("\n");
     return 0;
