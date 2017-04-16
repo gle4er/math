@@ -3,14 +3,15 @@
 #include <math.h>
 
 double x = 2.56; //<--ЗНАЧЕНИЕ ХЭ ПИСАТЬ СЮДА)00)))00))
+double y = 2.56; //<--ЗНАЧЕНИЕ ИГРЭК ПИСАТЬ СЮДА)00)))00))
 double beg = 1; //начало интервала
 double end = 4; //конец
-double intrvl = 1; //длина интервала
+double intrvl = 0.5; //длина интервала
 int cnt = 4; //кол-во переменных для лагранжа
 
 double f(double x)
 {
-    return sqrt(x);
+    return x * x;
 }
 
 void output(double tmp, int i, double *x_val, double *y_val)
@@ -62,7 +63,8 @@ int main()
         k += intrvl;
         y_val[i] = f(x_val[i]);
     }
-    double answ = langrage(x_val, y_val);
+    /*double answ = langrage(x_val, y_val); //прямой ланграге*/
+    double answ = langrage(y_val, x_val); //обратный ланграге
     printf("%.3lf ", answ);
     printf("\n");
     return 0;
